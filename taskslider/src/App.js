@@ -6,26 +6,34 @@ import Wrapper from './components/Wrapper/Wrapper';
 import Card from './Ui/Card/Card';
 import Listitems from './components/Listitems/Listitems';
 import { useEffect, useState } from 'react';
+import Img from './components/img/Img';
 import './Ui/Globalmodule.css';
 
 
 const App = () => {
 const [data,setData] = useState([]);
 const [page,setPage] = useState(1)
+const pageData = [
+  {id: 1, page: 1},
+  {id: 2, page: 2},
+  {id: 3, page: 3},
+  {id: 4, page: 4}
+]
 
 
 const fetchedDataFirst =()=>{
-  fetch(`https://dummyjson.com/products?limit=3&skip=${(page-1)*3}`)
+  fetch(`https://dummyjson.com/products?limit=3&skip=${page}`)
   .then(data => data.json())
   .then(res => setData(res))
-  
-}
-const fetchedDataanother = () =>{
-  setPage({
-    page: page + 1
-  })
-}
 
+}
+useEffect(()=>{
+    fetchedDataFirst()
+},[page])
+const fetchedDataanother = (index) =>{
+  setPage(index)
+}
+console.log(data);
 
 
 
@@ -33,9 +41,9 @@ const fetchedDataanother = () =>{
     <Wrapper>
       <Card className='task-window-box'>
       <Card  className='your-data-box'>
-      <List>
+      <List className='my-data-list'>
         {
-          data.map(el => {
+          data?.products?.map(el => {
             console.log(el)
         return(<Listitems className='my-data-listitems' key={el.id}>
               {el.id}
@@ -45,8 +53,8 @@ const fetchedDataanother = () =>{
               {el.price}
               {el.discountPercentage}
               {el.rating}
-              {el.images}
               {el.title}
+              <Img src = {el.images[0]} className='data-images'/>
         </Listitems>)
             })
         }
@@ -54,10 +62,9 @@ const fetchedDataanother = () =>{
       </List>
       </Card>
       <Card className='click-card'>
-      <Button onClick={fetchedDataFirst}>1</Button>
-      <Button onClick={fetchedDataFirst}>2</Button>
-      <Button onClick={fetchedDataFirst}>3</Button>
-      <Button onClick={fetchedDataanother}>4</Button>
+       { pageData.map(el =>
+      <Button onClick={() => fetchedDataanother(el.id)}>Click{el.page}</Button>
+       )}
       </Card>
       </Card>
     </Wrapper>

@@ -10,7 +10,7 @@
 }
 .your-data-box{
    border: 5px inset rgb(43, 108, 165); 
-    height: 90%;
+    height: 50%;
     width: 60%;
     list-style-type: none;
     background-color: wheat;
@@ -38,7 +38,7 @@
 .my-data-listitems{
     border: 1px solid rgb(43, 108, 165);
     color: rgb(43, 108, 165);
-    height: 89vh;
+    height: 49vh;
 }
 
 .data-images{
